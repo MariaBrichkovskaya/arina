@@ -30,7 +30,7 @@ public class Device {
     @Column(name = "brand",nullable = false)
     String brand;
     @Column(name = "repair_cost",nullable = false)
-    BigDecimal cost;
+    Double cost;
     @Column(name = "acceptance_date",nullable = false)
     LocalDate acceptanceDate;
     @ManyToOne(cascade = CascadeType.PERSIST)

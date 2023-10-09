@@ -1,12 +1,16 @@
 package com.course.project.arina.services;
 
+import com.course.project.arina.enums.Status;
 import com.course.project.arina.models.Device;
 import com.course.project.arina.repositories.DeviceRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,5 +35,13 @@ public class DeviceService {
     public void update(Device device){
         deviceRepository.save(device);
     }
-
+    public List<Device> sortByDate() {
+        return deviceRepository.findAll().stream().sorted(Comparator.comparing(Device::getIssueDate)).collect(Collectors.toList());
+    }
+    public List<Device> sortByStatus() {
+        return deviceRepository.findAll().stream().sorted(Comparator.comparing(Device::getStatus)).collect(Collectors.toList());
+    }
+    public List<Device> findByStatus(Status status){
+        return deviceRepository.findDeviceByStatus(status);
+    }
 }

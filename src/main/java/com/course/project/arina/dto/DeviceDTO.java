@@ -19,7 +19,7 @@ public class DeviceDTO {
     Status status;
     String name;
     String brand;
-    BigDecimal cost;
+    Double cost;
     LocalDate acceptanceDate;
     User user;
 
