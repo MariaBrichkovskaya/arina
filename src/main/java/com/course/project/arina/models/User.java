@@ -20,15 +20,15 @@ public class User {
     @Column(name = "id")
     Long id;
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
+    @Column(name = "role",nullable = false)
     Role role;
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     String name;
-    @Column(name = "surname")
+    @Column(name = "surname",nullable = false)
     String surname;
-    @Column(name = "email")
+    @Column(name = "email",nullable = false)
     String email;
-    @Column(name = "password")
+    @Column(name = "password",nullable = false)
     String password;
     @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL, orphanRemoval = true)
     List<Device> devices;

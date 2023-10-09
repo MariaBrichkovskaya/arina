@@ -20,18 +20,18 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
-    @Column(name = "issue_date")
+    @Column(name = "issue_date",nullable = false)
     LocalDate issueDate;
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = "status",nullable = false)
     Status status;
-    @Column(name = "name")
+    @Column(name = "name",nullable = false)
     String name;
-    @Column(name = "brand")
+    @Column(name = "brand",nullable = false)
     String brand;
-    @Column(name = "repair_cost")
+    @Column(name = "repair_cost",nullable = false)
     BigDecimal cost;
-    @Column(name = "acceptance_date")
+    @Column(name = "acceptance_date",nullable = false)
     LocalDate acceptanceDate;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id",referencedColumnName = "id")
