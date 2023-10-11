@@ -4,10 +4,10 @@ import com.course.project.arina.enums.Status;
 import com.course.project.arina.models.Device;
 import com.course.project.arina.repositories.DeviceRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,6 +25,7 @@ public class DeviceService {
     }
     @Transactional
     public void add(Device device){
+        device.setIssueDate(LocalDate.now());
         deviceRepository.save(device);
     }
     @Transactional

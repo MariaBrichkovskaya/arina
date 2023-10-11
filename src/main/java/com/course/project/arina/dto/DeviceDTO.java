@@ -21,6 +21,6 @@ public class DeviceDTO {
     String brand;
     Double cost;
     LocalDate acceptanceDate;
-    User user;
+    UserDTO user;
 
 }
