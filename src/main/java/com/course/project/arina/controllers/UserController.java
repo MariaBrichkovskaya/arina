@@ -1,12 +1,14 @@
 package com.course.project.arina.controllers;
 
-import com.course.project.arina.dto.DeviceDTO;
 import com.course.project.arina.dto.UserDTO;
 import com.course.project.arina.models.Device;
 import com.course.project.arina.models.User;
 import com.course.project.arina.services.UserService;
+import com.course.project.arina.services.impl.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,6 +36,19 @@ public class UserController {
     }
     @GetMapping("/{id}")
     public UserDTO getById(@PathVariable Long id){
+        System.out.println(userService.getSum(id));
         return new  ModelMapper().map(userService.findById(id),UserDTO.class);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id){
+        userService.delete(id);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<HttpStatus> update(@RequestBody UserDTO userDTO, @PathVariable Long id)
+    {
+        User user =modelMapper.map(userDTO, User.class);
+        userService.update(id,user);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
