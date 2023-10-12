@@ -20,10 +20,10 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     Long id;
-    @Column(name = "issue_date",nullable = false)
+    @Column(name = "issue_date")
     LocalDate issueDate;
     @Enumerated(EnumType.STRING)
-    @Column(name = "status",nullable = false)
+    @Column(name = "status")
     Status status;
     @Column(name = "name",nullable = false)
     String name;

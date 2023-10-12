@@ -1,58 +1,52 @@
 package com.course.project.arina.controllers;
 
-import com.course.project.arina.dto.DeviceDTO;
 import com.course.project.arina.enums.Status;
 import com.course.project.arina.models.Device;
 import com.course.project.arina.services.DeviceService;
+import com.course.project.arina.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/devices")
 public class DeviceController {
     private final DeviceService deviceService;
-    private final ModelMapper modelMapper;
+    private final UserService userService;
     @GetMapping
-    public List<DeviceDTO> getAll(@RequestParam(name = "status",required = false)Status status){
-        if (status==null){
-            return deviceService.getAll().stream()
-                    .map(device -> new ModelMapper().map(device, DeviceDTO.class))
-                    .collect(Collectors.toList());
-        } else{
-            return deviceService.findByStatus(status).stream()
-                    .map(device -> new ModelMapper().map(device, DeviceDTO.class))
-                    .collect(Collectors.toList());
-        }
-
-
+    public String getAll(@RequestParam(name = "status",required = false)Status status, Model model){
+            model.addAttribute("devices",deviceService.getAll(status));
+            model.addAttribute("users",userService.getAll());
+            model.addAttribute("statuses", Arrays.stream(Status.values()).collect(Collectors.toList()));
+        return "devices";
     }
     @GetMapping("/{id}")
-    public DeviceDTO getById(@PathVariable Long id){
-        return new  ModelMapper().map(deviceService.findById(id),DeviceDTO.class);
+    public String getById(@PathVariable Long id,Model model){
+        model.addAttribute("device",deviceService.findById(id));
+        return "device-info";
     }
     @PostMapping
-    public ResponseEntity<HttpStatus> add(@RequestBody DeviceDTO deviceDTO){
-        Device device =modelMapper.map(deviceDTO, Device.class);
+    public String add(Device device){
         deviceService.add(device);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return "redirect:/devices";
 
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id){
+    @PostMapping("/{id}")
+    public String deleteById(@PathVariable Long id){
         deviceService.delete(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return "redirect:/devices";
     }
     @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(@RequestBody DeviceDTO deviceDTO,@PathVariable Long id)
+    public ResponseEntity<HttpStatus> update(Device device,@PathVariable Long id)
     {
-        Device device =modelMapper.map(deviceDTO, Device.class);
         deviceService.update(id,device);
         return ResponseEntity.ok(HttpStatus.OK);
     }

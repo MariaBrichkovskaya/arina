@@ -21,9 +21,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class DeviceServiceImpl implements DeviceService {
     private final DeviceRepository deviceRepository;
-    @Cacheable(value = "devices")
-    public List<Device> getAll(){
-        return deviceRepository.findAll();
+    //@Cacheable(value = "devices")
+    @CachePut(value = "devices")
+    public List<Device> getAll(Status status){
+        if(status==null) return deviceRepository.findAll();
+        else return findByStatus(status);
     }
     @Cacheable(value = "devices",key = "#id")
     public Device findById(Long id){
@@ -32,6 +34,7 @@ public class DeviceServiceImpl implements DeviceService {
     @Transactional
     @CachePut(value = "devices")
     public void add(Device device){
+        device.setStatus(Status.PENDING);
         device.setIssueDate(LocalDate.now());
         deviceRepository.save(device);
     }

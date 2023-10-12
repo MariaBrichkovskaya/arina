@@ -13,10 +13,6 @@ public class ArinaApplication {
     public static void main(String[] args) {
         SpringApplication.run(ArinaApplication.class, args);
     }
-    @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
 
 
 }

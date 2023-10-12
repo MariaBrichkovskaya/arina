@@ -6,7 +6,7 @@ import com.course.project.arina.models.Device;
 import java.util.List;
 
 public interface DeviceService {
-    List<Device> getAll();
+    List<Device> getAll(Status status);
 
     Device findById(Long id);
 
