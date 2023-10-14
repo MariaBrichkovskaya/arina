@@ -6,6 +6,7 @@
     <title>Device service</title>
 </head>
 <body>
+<a href="/">Вернуться на главную</a>
 <h1>DEVICES</h1><hr>
 <form action="/devices" method="get" onchange="this.submit()">
     Поиск по статусу <select name="status">

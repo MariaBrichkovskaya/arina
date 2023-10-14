@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ремонт, Строительство и Ко</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-</head>
+    </head>
 <body>
-<h1 style="text-align: center;">Ремонт, Строительство и Ко</h1>
 <hr>
 <h4 style="position: relative; left: 50%; transform: translate(-50%,0); text-indent: 45%">Регистрация</h4><br>
 <form action="/registration" method="post">

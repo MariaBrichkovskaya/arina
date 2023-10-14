@@ -4,6 +4,7 @@
     <title>DEVICES</title>
 </head>
 <body>
+<a href="/">Вернуться на главную</a>
 <hr>
 <h3>Редактирование информации о поставках</h3>
 <form action="/devices/editing/${device.id}" method="post" enctype="multipart/form-data">

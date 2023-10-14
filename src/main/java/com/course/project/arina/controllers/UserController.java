@@ -9,8 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,6 +44,38 @@ public class UserController {
     {
         userService.update(id,user);
         return "user-edit";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable Long id, Principal principal, Model model){
+        User userToEdit = userService.findById(id);
+        model.addAttribute("user", userToEdit);
+        return "user-edit";
+    }
+    @PostMapping("edit/users/editing/{id}")
+    public String editingUser(@PathVariable Long id, @RequestParam(name="oldPassword") String oldPassword,
+                              @RequestParam(name="password") String password,@RequestParam(name="login") String login, Model model)
+    {
+        User user = userService.findById(id);
+        if(!(password.isEmpty() || oldPassword.isEmpty())) {
+            if (userService.doPasswordsMatch(oldPassword, user.getPassword())) {
+                user.setPassword(userService.doPasswordEncode(password));
+            } else {
+                return "redirect:/user/edit/{id}";
+            }
+        }
+        user.setEmail(login);
+        userService.update(id, user);
+        userService.updatePrincipal(userService.findById(id));
+        model.addAttribute("user", userService.findById(id));
+        return "main-page";
+    }
+    @PostMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id, @RequestParam(name = "password", required = false)String password){
+        if(userService.doPasswordsMatch(password, userService.findById(id).getPassword())){
+            userService.delete(id);
+            return "registration";
+        } else return "redirect:/edit/{id}";
     }
 
 }

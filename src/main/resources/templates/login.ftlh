@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Ремонт, Строительство и Ко</title>
+    <title>DEVICES</title>
 
     </head>
 <body>
-<h1 style="text-align: center;">Ремонт, Строительство и Ко</h1>
+
 <hr>
 <h4 style="text-align: center;">Авторизация</h4>
 <br>

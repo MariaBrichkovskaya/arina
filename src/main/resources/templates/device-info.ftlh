@@ -4,6 +4,7 @@
     <title>DEVICES</title>
 </head>
 <body>
+<a href="/">Вернуться на главную</a>
 <h1>DEVICES</h1><hr>
 <h4>Подробная информация о девайсе</h4>
 <b>Название девайса </b>${device.name}<br>

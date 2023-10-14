@@ -4,8 +4,9 @@
     <title>DEVICES</title>
 </head>
 <body>
+<a href="/">Вернуться на главную</a>
 <h1>USER</h1><hr>
-<h4>Подробная информация о девайсе</h4>
+<h4>Подробная информация о пользователе</h4>
 <b>Имя </b>${user.name}<br>
 <b>Фамилия </b>${user.surname}<br>
 <b>Почта </b>${user.email}<br>
@@ -16,7 +17,8 @@
     </div>
 <#else>
     <h3>У данного пользователя отсутствуют девайсы</h3>
-</#list>
+</#list><br>
+<p>Итоговая стоимость всех девайсов: ${sum}</p>
 <hr>
 <h3>Удаление пользователя</h3>
 <form action="/users/${user.id}" method="post" enctype="multipart/form-data">

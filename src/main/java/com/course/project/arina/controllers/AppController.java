@@ -18,6 +18,10 @@ public class AppController {
 
     @GetMapping("/")
     public String main_page(Principal principal, Model model){
+        if(userService.getUserByPrincipal(principal).getEmail()!=null){
+            model.addAttribute("sum",userService.getSum(user));
+            model.addAttribute("devices",userService.getUserByPrincipal(principal).getDevices());
+        }
         model.addAttribute("user", userService.getUserByPrincipal(principal));
         return "main-page";
     }

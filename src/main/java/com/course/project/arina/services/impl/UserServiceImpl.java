@@ -73,6 +73,10 @@ public class UserServiceImpl implements UserService {
         if(sumUser.getDevices().isEmpty()) return 0.0;
         return sumUser.getDevices().stream().mapToDouble(Device::getCost).sum();
     }
+    public Double getSum(User user){
+        if(user.getDevices().isEmpty()) return 0.0;
+        return user.getDevices().stream().mapToDouble(Device::getCost).sum();
+    }
     public User getUserByPrincipal(Principal principal) {
         if(principal==null)return new User();
         return userRepository.findByEmail(principal.getName());
@@ -80,6 +84,12 @@ public class UserServiceImpl implements UserService {
     public void updatePrincipal(User user) {
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+    public boolean doPasswordsMatch(String rawPassword,String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+    public String doPasswordEncode(String password) {
+        return passwordEncoder.encode(password);
     }
 
 }

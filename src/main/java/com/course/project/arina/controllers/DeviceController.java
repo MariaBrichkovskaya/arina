@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class DeviceController {
     private final DeviceService deviceService;
     private final UserService userService;
+    private final AppController appController;
     @GetMapping
     public String getAll(@RequestParam(name = "status",required = false)Status status, Model model,@RequestParam(required = false) Boolean sortedByDate,@RequestParam(required = false) Boolean sortedByStatus){
 
@@ -40,6 +41,7 @@ public class DeviceController {
         model.addAttribute("statuses", Arrays.stream(Status.values()).collect(Collectors.toList()));
         model.addAttribute("sortedByDate", sortedByDate);
         model.addAttribute("sortedByStatus", sortedByStatus);
+        model.addAttribute("user", appController.user);
         //если админ то функционал такой, если юзер то вызываем юзер.гетДевайсис
         return "devices";
     }
