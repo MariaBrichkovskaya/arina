@@ -17,4 +17,8 @@ public interface DeviceService {
     void update(Long id,Device device);
 
     List<Device> findByStatus(Status status);
+
+    List<Device> sortByDate();
+
+    List<Device> sortByStatus();
 }

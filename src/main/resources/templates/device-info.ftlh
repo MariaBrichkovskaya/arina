@@ -15,7 +15,9 @@
 <hr>
     <h3>Удаление девайса</h3>
     <form action="/devices/${device.id}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Удалить девайс"/>
     </form><br>
+<a href="/devices/edit/${device.id}">Редактирование информации</a>
 </body>
 </html>

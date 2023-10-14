@@ -7,18 +7,28 @@
 </head>
 <body>
 <h1>DEVICES</h1><hr>
-<form action="/devices" method="get">
+<form action="/devices" method="get" onchange="this.submit()">
     Поиск по статусу <select name="status">
         <option value="">Выберите статус</option>
         <#list statuses as status>
             <option value="${status.valueOf(status.name())}">${status.name()}</option>
         </#list>
+        <option value="">Отменить поиск</option>
     </select>
-    <input type="submit" value="Поиск"/>
+    <form>
+        <input type="radio" name="sortedByDate" id="mc1" <#if sortedByDate>checked="checked"</#if>>
+        <label for="mc1">Сортировка по дате</label>
+
+        <input type="radio" name="sortedByStatus" id="mc2" <#if sortedByStatus>checked="checked"</#if>>
+        <label for="mc2">Сортировка по статусу</label>
+
+    </form>
+
+
 </form><br>
 <#list devices as device>
     <div>
-        <p><#if device.name?has_content><b>${device.name}</b></#if> ${device.issueDate} | <a href="/devices/${device.id}">Подробнее</a></p>
+        <p><#if device.name?has_content><b>${device.name}</b></#if> ${device.issueDate} |${device.status.name()}| <a href="/devices/${device.id}">Подробнее</a></p>
     </div>
 <#else>
     <h3>Девайсов не наблюдается</h3>
@@ -37,8 +47,7 @@
                 <option value="${user.id}">${user.name} ${user.surname}</option>
             </#list>
         </select>
-
-
+        <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Добавить девайс"/>
     </form>
 </body>

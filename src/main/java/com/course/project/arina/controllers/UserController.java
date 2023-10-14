@@ -3,16 +3,18 @@ package com.course.project.arina.controllers;
 import com.course.project.arina.models.User;
 import com.course.project.arina.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
@@ -22,24 +24,27 @@ public class UserController {
 
     }
     @GetMapping
-    public List<User> getAll(){
-        return userService.getAll();
-
+    public String getAll(Model model){
+        model.addAttribute("users",userService.getAll());
+        return "users";
     }
     @GetMapping("/{id}")
-    public User getById(@PathVariable Long id){
-        System.out.println(userService.getSum(id));
-        return userService.findById(id);
+    public String getById(@PathVariable Long id,Model model){
+        model.addAttribute("sum",userService.getSum(id));
+        model.addAttribute("user",userService.findById(id));
+        model.addAttribute("devices",userService.findById(id).getDevices());
+        return "user-info";
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id){
+    @PostMapping("/{id}")
+    public String deleteById(@PathVariable Long id){
         userService.delete(id);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return "redirect:/users";
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> update(User user, @PathVariable Long id)
+    @PostMapping("/edit/{id}")
+    public String update(User user, @PathVariable Long id)
     {
         userService.update(id,user);
-        return ResponseEntity.ok(HttpStatus.OK);
+        return "user-edit";
     }
+
 }

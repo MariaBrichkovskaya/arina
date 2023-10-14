@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name="devices")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Device {
@@ -36,5 +38,6 @@ public class Device {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     User user;
+    public String toStringCost(){return cost.toString();}
 
 }
