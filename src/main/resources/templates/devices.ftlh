@@ -4,28 +4,38 @@
 <head>
     <meta charset="utf-8">
     <title>Device service</title>
+    <script>
+        function setValues() {
+            document.getElementById("mc1").checked = ${sortedByDate?c};
+            document.getElementById("mc2").checked = ${sortedByStatus?c};
+                const select = document.getElementById("select-status");
+                if(${currentStatus} === 0) select.options[${currentStatus}].selected = true;
+                else select.options[${currentStatus}].selected = true;
+            }
+        function updateCheckedAndSubmit() {
+            if(document.getElementById("mc1").checked != ${sortedByDate?c}) document.getElementById("mc2").checked = null;
+            else if (document.getElementById("mc2").checked != ${sortedByStatus?c}) document.getElementById("mc1").checked = null;
+
+            document.getElementById("form").submit();
+        }
+    </script>
 </head>
-<body>
+<body onload="setValues()">
 <a href="/">Вернуться на главную</a>
 <h1>DEVICES</h1><hr>
-<form action="/devices" method="get" onchange="this.submit()">
-    Поиск по статусу <select name="status">
+<form action="/devices" method="get" id="form">
+    Поиск по статусу <select name="status" onchange="form.submit()" id="select-status">
         <option value="">Выберите статус</option>
         <#list statuses as status>
             <option value="${status.valueOf(status.name())}">${status.name()}</option>
         </#list>
         <option value="">Отменить поиск</option>
     </select>
-    <form>
-        <input type="radio" name="sortedByDate" id="mc1" <#if sortedByDate>checked="checked"</#if>>
+        <input type="checkbox" name="sortedByDate" id="mc1" onchange="updateCheckedAndSubmit()">
         <label for="mc1">Сортировка по дате</label>
 
-        <input type="radio" name="sortedByStatus" id="mc2" <#if sortedByStatus>checked="checked"</#if>>
+        <input type="checkbox" name="sortedByStatus" id="mc2" onchange="updateCheckedAndSubmit()">
         <label for="mc2">Сортировка по статусу</label>
-
-    </form>
-
-
 </form><br>
 <#list devices as device>
     <div>

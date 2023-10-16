@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
@@ -26,18 +27,15 @@ public class DeviceController {
     private final AppController appController;
     @GetMapping
     public String getAll(@RequestParam(name = "status",required = false)Status status, Model model,@RequestParam(required = false) Boolean sortedByDate,@RequestParam(required = false) Boolean sortedByStatus){
-
-
         if(sortedByDate==null) sortedByDate=false;
         if (sortedByStatus==null) sortedByStatus=false;
-//        if(sortedByDate) sortedByStatus=false;
-//        if (sortedByStatus) sortedByDate=false;
-        System.err.println(sortedByStatus);
-        System.err.println(sortedByDate);
-        if(sortedByDate) {model.addAttribute("devices", deviceService.sortByDate());}
-        else if(sortedByStatus) {model.addAttribute("devices", deviceService.sortByStatus());}
-        else {model.addAttribute("devices",deviceService.getAll(status));}
+        List<Device> devices = deviceService.getAll(status);
+        if(sortedByDate) {model.addAttribute("devices", deviceService.sortByDate(devices));}
+        else if(sortedByStatus) {model.addAttribute("devices", deviceService.sortByStatus(devices));}
+        else {model.addAttribute("devices",devices);}
         model.addAttribute("users",userService.getAll());
+        if (status != null) model.addAttribute("currentStatus", status.getNumber());
+        else model.addAttribute("currentStatus", 0);
         model.addAttribute("statuses", Arrays.stream(Status.values()).collect(Collectors.toList()));
         model.addAttribute("sortedByDate", sortedByDate);
         model.addAttribute("sortedByStatus", sortedByStatus);

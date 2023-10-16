@@ -64,11 +64,11 @@ public class DeviceServiceImpl implements DeviceService {
         deviceToEdit.setAcceptanceDate(device.getAcceptanceDate());
         deviceToEdit.setStatus(device.getStatus());
     }
-    public List<Device> sortByDate() {
-        return deviceRepository.findAll().stream().sorted(Comparator.comparing(Device::getIssueDate)).collect(Collectors.toList());
+    public List<Device> sortByDate(List<Device> devices) {
+        return devices.stream().sorted(Comparator.comparing(Device::getIssueDate)).collect(Collectors.toList());
     }
-    public List<Device> sortByStatus() {
-        return deviceRepository.findAll().stream().sorted(Comparator.comparing(Device::getStatus)).collect(Collectors.toList());
+    public List<Device> sortByStatus(List<Device> devices) {
+        return devices.stream().sorted(Comparator.comparing(Device::getStatus)).collect(Collectors.toList());
     }
     public List<Device> findByStatus(Status status){
         return deviceRepository.findDeviceByStatus(status);

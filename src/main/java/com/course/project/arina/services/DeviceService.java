@@ -18,7 +18,7 @@ public interface DeviceService {
 
     List<Device> findByStatus(Status status);
 
-    List<Device> sortByDate();
+    List<Device> sortByDate(List<Device> devices);
 
-    List<Device> sortByStatus();
+    List<Device> sortByStatus(List<Device> devices);
 }
