@@ -1,6 +1,8 @@
 package com.course.project.arina.controllers;
 
+import com.course.project.arina.models.Device;
 import com.course.project.arina.models.User;
+import com.course.project.arina.services.DeviceService;
 import com.course.project.arina.services.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +19,10 @@ import java.security.Principal;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+    private final DeviceService deviceService;
     @PostMapping
     public void add(@RequestBody User user){
         userService.add(user);
-
     }
     @GetMapping
     public String getAll(Model model){
@@ -38,6 +40,11 @@ public class UserController {
     public String deleteById(@PathVariable Long id){
         userService.delete(id);
         return "redirect:/users";
+    }
+    @PostMapping("/devices")
+    public String addDevice( Device device){
+        deviceService.add(device);
+        return "redirect:/";
     }
     @PostMapping("/edit/{id}")
     public String update(User user, @PathVariable Long id)

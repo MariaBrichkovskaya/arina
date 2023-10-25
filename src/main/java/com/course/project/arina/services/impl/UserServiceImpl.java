@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
     }
     public Double getSum(User user){
         if(user.getDevices().isEmpty()) return 0.0;
-        return user.getDevices().stream().mapToDouble(Device::getCost).sum();
+        return user.getDevices().stream().filter(device -> device.getCost()!=null).mapToDouble(Device::getCost).sum();
     }
     public User getUserByPrincipal(Principal principal) {
         if(principal==null)return new User();
