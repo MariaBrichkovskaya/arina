@@ -20,7 +20,7 @@
 
 <hr>
 
-<#if user.email??>
+<#if user.email??&&user.isAdmin()>
     <h4>
         <p>
             <a href="/devices">Девайсы</a>
@@ -30,7 +30,14 @@
     </h4>
     <hr>
 </#if>
+
 <#if user.email??&&user.isUser()>
+    <h4>
+        <p>
+            <a href="users/edit/${user.id}">Аккаунт</a>
+        </p>
+    </h4>
+    <hr>
     <b>Имя </b>${user.name}<br>
     <b>Фамилия </b>${user.surname}<br>
     <b>Почта </b>${user.email}<br>

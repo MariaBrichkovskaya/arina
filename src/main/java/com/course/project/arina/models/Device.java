@@ -39,5 +39,11 @@ public class Device {
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     User user;
     public String toStringCost(){return cost.toString();}
+    public boolean isPending(){
+        if(status.equals(Status.PENDING)){
+            return true;
+        }
+        return false;
+    }
 
 }

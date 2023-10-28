@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
-@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+@PreAuthorize("hasAnyAuthority('ADMIN')")
 @RequestMapping("/devices")
 public class DeviceController {
     private final DeviceService deviceService;

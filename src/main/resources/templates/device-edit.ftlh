@@ -10,8 +10,14 @@
 <form action="/devices/editing/${device.id}" method="post" enctype="multipart/form-data">
     Название <input type="text" name="name" value="${device.name}"/><br><br>
     Бренд <input type="text" name="brand" value="${device.brand}"/><br><br>
-    Стоимость <input type="number" required step="0.01" name="cost" value="${device.toStringCost()}" руб./><br><br>
-    Дата окончания ремонта <input type="date" value="${device.acceptanceDate}" name="acceptanceDate"/><br><br>
+    <#if !device.isPending()>
+        Стоимость <input type="number" required step="0.01" name="cost" value="${device.toStringCost()}" руб./><br><br>
+        Дата окончания ремонта <input type="date" value="${device.acceptanceDate}" name="acceptanceDate"/><br><br>
+        <#else>
+            Стоимость <input type="number" required step="0.01" name="cost" /><br><br>
+            Дата окончания ремонта <input type="date" name="acceptanceDate"/><br><br>
+    </#if>
+
     Статус <select name="status">
         <option value="${device.status}">${device.status}</option>
         <#list statuses as status>

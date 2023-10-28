@@ -20,16 +20,19 @@ import java.security.Principal;
 public class UserController {
     private final UserService userService;
     private final DeviceService deviceService;
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping
     public void add(@RequestBody User user){
         userService.add(user);
     }
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String getAll(Model model){
         model.addAttribute("users",userService.getAll());
         return "users";
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public String getById(@PathVariable Long id,Model model){
         model.addAttribute("sum",userService.getSum(id));
         model.addAttribute("user",userService.findById(id));
@@ -37,6 +40,7 @@ public class UserController {
         return "user-info";
     }
     @PostMapping("/{id}")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public String deleteById(@PathVariable Long id){
         userService.delete(id);
         return "redirect:/users";
@@ -46,20 +50,23 @@ public class UserController {
         deviceService.add(device);
         return "redirect:/";
     }
-    @PostMapping("/edit/{id}")
+   /* @PostMapping("/edit/{id}")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public String update(User user, @PathVariable Long id)
     {
         userService.update(id,user);
         return "user-edit";
-    }
+    }*/
 
     @GetMapping("/edit/{id}")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public String editUser(@PathVariable Long id, Principal principal, Model model){
         User userToEdit = userService.findById(id);
         model.addAttribute("user", userToEdit);
         return "user-edit";
     }
-    @PostMapping("edit/users/editing/{id}")
+    @PostMapping("/editing/{id}")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public String editingUser(@PathVariable Long id, @RequestParam(name="oldPassword") String oldPassword,
                               @RequestParam(name="password") String password,@RequestParam(name="login") String login, Model model)
     {
@@ -68,7 +75,7 @@ public class UserController {
             if (userService.doPasswordsMatch(oldPassword, user.getPassword())) {
                 user.setPassword(userService.doPasswordEncode(password));
             } else {
-                return "redirect:/user/edit/{id}";
+                return "redirect:/users/edit/{id}";
             }
         }
         user.setEmail(login);
@@ -78,11 +85,12 @@ public class UserController {
         return "main-page";
     }
     @PostMapping("/delete/{id}")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
     public String deleteUser(@PathVariable Long id, @RequestParam(name = "password", required = false)String password){
         if(userService.doPasswordsMatch(password, userService.findById(id).getPassword())){
             userService.delete(id);
             return "registration";
-        } else return "redirect:/edit/{id}";
+        } else return "error";
     }
 
 }
