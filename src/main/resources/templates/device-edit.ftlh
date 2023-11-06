@@ -19,11 +19,12 @@
     </#if>
 
     Статус <select name="status">
-        <option value="${device.status}">${device.status}</option>
+        <option value="${device.status}">${device.status.valueStr}</option>
         <#list statuses as status>
-            <option value="${status}">${status.name()}</option>
+            <option value="${status}">${status.valueStr}</option>
         </#list>
     </select>
+    <input type="hidden" name="user" value="${device.user.id}">
     <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Изменить информацию"/>
 </form>

@@ -44,7 +44,7 @@
     <b>Список девайсов:</b><br>
     <#list devices as device>
         <div>
-            <p><#if device.name?has_content> ${device.name}| ${device.brand}| <#if device.cost?has_content>${device.cost} руб.<#else>Заявка не обработана</#if> </#if> </p>
+            <p><#if device.name?has_content> ${device.name}| ${device.brand}| <#if device.cost?has_content>${device.cost} руб.</#if> |${device.status.valueStr}</#if> </p>
         </div>
     <#else>
         <h3>У данного пользователя отсутствуют девайсы</h3>
@@ -53,8 +53,8 @@
     <hr>
     <h3>Добавление нового девайса</h3>
     <form action="/users/devices" method="post" enctype="multipart/form-data">
-        Название <input type="text" name="name"/><br><br>
-        Бренд <input type="text" name="brand"/><br><br>
+        Название <input type="text" required name="name"/><br><br>
+        Бренд <input type="text" required name="brand"/><br><br>
         <input type="hidden" name="user" value="${user.id}">
         <input type="hidden" name="_csrf" value="${_csrf.token}">
         <input type="submit" value="Добавить девайс"/>

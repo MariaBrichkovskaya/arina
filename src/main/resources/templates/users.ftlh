@@ -18,10 +18,10 @@
 
 <h3>Добавление нового пользователя</h3>
 <form action="/users" method="post" enctype="multipart/form-data">
-    Имя <input type="text" name="name"/><br><br>
-    Фамилия <input type="text" name="surname"/><br><br>
-    Электронная почта <input type="email" name="email"/><br><br>
-    Пароль <input type="text" name="password"/><br><br>
+    Имя <input type="text" required name="name"/><br><br>
+    Фамилия <input type="text" required name="surname"/><br><br>
+    Электронная почта <input type="email" required name="email"/><br><br>
+    Пароль <input type="text" required name="password"/><br><br>
     <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Добавить пользователя"/>
 </form>

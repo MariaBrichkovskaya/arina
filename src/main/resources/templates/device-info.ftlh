@@ -14,7 +14,7 @@
 </#if>
 <b>Бренд </b>${device.brand}<br>
 <b>Дата заявки </b>${device.issueDate}<br>
-<b>Статус </b>${device.status.name()}<br>
+<b>Статус </b>${device.status.valueStr}<br>
 <hr>
     <h3>Удаление девайса</h3>
     <form action="/devices/${device.id}" method="post" enctype="multipart/form-data">

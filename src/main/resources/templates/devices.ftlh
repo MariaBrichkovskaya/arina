@@ -47,12 +47,12 @@
 
     <h3>Добавление нового девайса</h3>
     <form action="/devices" method="post" enctype="multipart/form-data">
-        Название <input type="text" name="name"/><br><br>
-        Бренд <input type="text" name="brand"/><br><br>
+        Название <input type="text" required name="name"/><br><br>
+        Бренд <input type="text" required name="brand"/><br><br>
         Стоимость <input type="number" required step="0.01" name="cost" руб./><br><br>
         Дата окончания ремонта <input type="date" required pattern="yyyy-MM-dd" name="acceptanceDate"/><br><br>
 
-        Пользователь <select name="user">
+        Пользователь <select required name="user">
             <option value="">Выберите пользователя</option>
             <#list users as user>
                 <option value="${user.id}">${user.name} ${user.surname}</option>
