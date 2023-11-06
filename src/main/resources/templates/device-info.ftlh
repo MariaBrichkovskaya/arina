@@ -8,7 +8,7 @@
 <h1>DEVICES</h1><hr>
 <h4>Подробная информация о девайсе</h4>
 <b>Название девайса </b>${device.name}<br>
-<#if !device.isPending()>
+<#if device.cost??&&device.acceptanceDate??>
     <b>Стоимость заказа </b>${device.cost}<br>
     <b>Дата окончания ремонта </b>${device.acceptanceDate}<br>
 </#if>

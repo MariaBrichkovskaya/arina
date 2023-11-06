@@ -31,9 +31,9 @@ public class Device {
     String name;
     @Column(name = "brand",nullable = false)
     String brand;
-    @Column(name = "repair_cost",nullable = true)
+    @Column(name = "repair_cost")
     Double cost;
-    @Column(name = "acceptance_date",nullable = true)
+    @Column(name = "acceptance_date")
     LocalDate acceptanceDate;
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id",referencedColumnName = "id")

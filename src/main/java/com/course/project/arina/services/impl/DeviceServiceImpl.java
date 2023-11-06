@@ -24,7 +24,7 @@ public class DeviceServiceImpl implements DeviceService {
     //@Cacheable(value = "devices")
     //@CachePut(value = "devices")
     public List<Device> getAll(Status status){
-        if(status==null) return deviceRepository.findAll();
+        if(status==null) return deviceRepository.findAllByOrderByIssueDateDesc();
         else return findByStatus(status);
     }
     //@CachePut(value = "devices",key = "#id")

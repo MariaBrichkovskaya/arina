@@ -39,7 +39,10 @@
 </form><br>
 <#list devices as device>
     <div>
-        <p><#if device.name?has_content><b>${device.name}</b></#if> ${device.issueDate} |${device.status.name()}| <a href="/devices/${device.id}">Подробнее</a></p>
+        <p><#if device.cost??><b>${device.name}</b> ${device.issueDate} |${device.status.valueStr}|<a href="/devices/${device.id}">Подробнее</a></p>
+            <#else >
+            <p style="color: red"><b>${device.name}</b> ${device.issueDate} |${device.status.valueStr}|<a href="/devices/${device.id}">Подробнее</a></p>
+            </#if>
     </div>
 <#else>
     <h3>Девайсов не наблюдается</h3>

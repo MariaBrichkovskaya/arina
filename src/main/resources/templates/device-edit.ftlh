@@ -6,11 +6,11 @@
 <body>
 <a href="/">Вернуться на главную</a>
 <hr>
-<h3>Редактирование информации о поставках</h3>
+<h3>Редактирование информации о заявке</h3>
 <form action="/devices/editing/${device.id}" method="post" enctype="multipart/form-data">
     Название <input type="text" name="name" value="${device.name}"/><br><br>
     Бренд <input type="text" name="brand" value="${device.brand}"/><br><br>
-    <#if !device.isPending()>
+    <#if device.cost??&&device.acceptanceDate??>
         Стоимость <input type="number" required step="0.01" name="cost" value="${device.toStringCost()}" руб./><br><br>
         Дата окончания ремонта <input type="date" value="${device.acceptanceDate}" name="acceptanceDate"/><br><br>
         <#else>
