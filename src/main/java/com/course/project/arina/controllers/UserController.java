@@ -65,24 +65,35 @@ public class UserController {
         model.addAttribute("user", userToEdit);
         return "user-edit";
     }
-    @PostMapping("/editing/{id}")
+    @PostMapping("/editInfo/{id}")
     //@PreAuthorize("hasAnyAuthority('ADMIN')")
-    public String editingUser(@PathVariable Long id, @RequestParam(name="oldPassword") String oldPassword,
-                              @RequestParam(name="password") String password,@RequestParam(name="login") String login, Model model)
+    public String editingInfo(@PathVariable Long id, @RequestParam(name="name") String name,
+                              @RequestParam(name="surname") String surname,@RequestParam(name="login") String login, Model model)
     {
         User user = userService.findById(id);
-        if(!(password.isEmpty() || oldPassword.isEmpty())) {
+        user.setEmail(login);
+        user.setName(name);
+        user.setSurname(surname);
+        userService.update(id, user);
+        userService.updatePrincipal(userService.findById(id));
+        model.addAttribute("user", userService.findById(id));
+        return "redirect:/";
+    }
+    @PostMapping("/editPassword/{id}")
+    //@PreAuthorize("hasAnyAuthority('ADMIN')")
+    public String editingPassword(@PathVariable Long id, @RequestParam(name="oldPassword") String oldPassword,
+                              @RequestParam(name="password") String password, Model model)
+    {
+        User user = userService.findById(id);
             if (userService.doPasswordsMatch(oldPassword, user.getPassword())) {
                 user.setPassword(userService.doPasswordEncode(password));
             } else {
                 return "redirect:/users/edit/{id}";
             }
-        }
-        user.setEmail(login);
         userService.update(id, user);
         userService.updatePrincipal(userService.findById(id));
         model.addAttribute("user", userService.findById(id));
-        return "main-page";
+        return "redirect:/";
     }
     @PostMapping("/delete/{id}")
     //@PreAuthorize("hasAnyAuthority('ADMIN')")

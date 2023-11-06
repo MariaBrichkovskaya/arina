@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService {
     }
     //@Cacheable(value = "users",key = "#id")
     public User findById(Long id){
-
         return userRepository.findById(id).orElse(null);
     }
     //@CachePut(value = "users")
@@ -54,18 +53,18 @@ public class UserServiceImpl implements UserService {
     //@CachePut(value = "users")
     @Transactional
     public void update(Long id ,User user){
-        User userToEdit=userRepository.findById(id).orElse(null);
-        assert userToEdit != null;
-        editing(user,userToEdit);
+//        User userToEdit=userRepository.findById(id).orElse(null);
+//        assert userToEdit != null;
+//        editing(user,userToEdit);
         userRepository.save(user);
     }
-    private void editing(User user,User userToEdit){
-        userToEdit.setName(user.getName());
-        userToEdit.setRole(user.getRole());
-        userToEdit.setEmail(user.getEmail());
-        userToEdit.setPassword(user.getPassword());
-        userToEdit.setSurname(user.getSurname());
-    }
+//    private void editing(User user,User userToEdit){
+//        userToEdit.setName(user.getName());
+//        userToEdit.setRole(user.getRole());
+//        userToEdit.setEmail(user.getEmail());
+//        userToEdit.setPassword(user.getPassword());
+//        userToEdit.setSurname(user.getSurname());
+//    }
 
     public Double getSum(Long id){
         User sumUser =userRepository.findById(id).orElse(null);
