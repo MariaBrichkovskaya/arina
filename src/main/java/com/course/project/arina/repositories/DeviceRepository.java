@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface DeviceRepository extends JpaRepository<Device,Long> {
     List<Device> findDeviceByStatus(Status status);
-    List<Device> findAllByOrderByIssueDateDesc();
+    List<Device> findAllByOrderByIdDesc();
 }
